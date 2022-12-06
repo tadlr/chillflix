@@ -1,0 +1,49 @@
+/*
+* Assignment 4
+* Taylor Ramirez Rodriguez (041072214)
+* MAD9013-010
+*
+* Font: Roboto
+* Styles: 300, 400(regular), 500, 700, 900
+*/
+
+/* 300 */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  src: url("../fonts/roboto/roboto-v30-latin-300.woff") format("woff"),
+    url("../fonts/roboto/") format("woff");
+}
+
+/* 400 */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/roboto/roboto-v30-latin-regular.woff") format("woff");
+}
+
+/* 500 */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  src: url("../fonts/roboto/roboto-v30-latin-500.woff") format("woff");
+}
+
+/* 700 */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/roboto/roboto-v30-latin-700.woff") format("woff");
+}
+
+/* 900 */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 900;
+  src: url("../fonts/roboto/roboto-v30-latin-900.woff") format("woff");
+}
