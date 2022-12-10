@@ -1,7 +1,23 @@
 import { NetworkError, ErrorHandler, log } from "./coreUtilities.js";
+import { dataStorage } from "./dataStorage.js";
 const pageManager = {
   target: null,
   page: null,
+  init: () => {
+    const attributes = pageManager.getHash();
+    const body = document.getElementById("page-credits");
+    if (body) {
+      pageManager.get("credits");
+      dataStorage.setSession("credit_query", attributes);
+    } else {
+      if (attributes.page) {
+        pageManager.get(attributes.page);
+        dataStorage.setSession("search_query", attributes);
+      } else {
+        pageManager.get("home");
+      }
+    }
+  },
   get: (page, target = "content") => {
     pageManager.target = target;
     pageManager.page = page;
@@ -15,13 +31,34 @@ const pageManager = {
       );
     }
   },
-  set: (attributes) => {
-    log(attributes);
+  getHash: () => {
+    let hash = location.hash;
+    let [_, type, page, query, pagination] = hash.split("/");
+
+    return {
+      type: type ?? false,
+      page: page ?? false,
+      query: query ?? false,
+      pagination: pagination ?? false,
+    };
+  },
+  set: (attributes, location = "") => {
     const base = "#",
-      page = attributes.page ? `/${attributes.page}` : "",
       type = attributes.type ? `/${attributes.type}` : "",
-      query = attributes.query ? `/${encodeURI(attributes.query)}` : "";
-    window.location.hash = `${page}${type}${query}`;
+      page = attributes.page ? `/${attributes.page}` : "",
+      query = attributes.query ? `/${attributes.query}` : "",
+      pagination = attributes.pagination ? `/${attributes.pagination}` : "";
+
+    const url = `${type}${page}${query}${pagination}`;
+
+    if (location) {
+      window.location = `${location}${base}${type}${page}${query}${pagination}`;
+    } else {
+      window.location.hash = `${type}${page}${query}${pagination}`;
+    }
+    document.title = `Chillflix - ${toCaps(attributes.page)} ${toCaps(
+      attributes.query
+    )}`;
   },
   fetchPage: (page) => {
     const pageName = `${page}.html`;
@@ -29,15 +66,19 @@ const pageManager = {
 
     fetch(`${path}${pageName}`)
       .then((response) => {
-        if (!response.ok) {
+        if (response.status == 404) {
+          pageManager.get("404");
+          throw new NetworkError("Page not found", response);
+        } else if (!response.ok) {
           new ErrorHandler(
             "<b>Something went wrong</b>",
-            `${path}${pageName} ${response.statusText}`,
+            `${response.statusText}`,
             "error"
           );
           throw new NetworkError("Failed page load", response);
+        } else {
+          return response.text();
         }
-        return response.text();
       })
       .then((html) => {
         const htmlParser = new DOMParser();
@@ -64,7 +105,7 @@ const pageManager = {
           `${path}${pageName} ${error}`,
           "error"
         );
-        throw new NetworkError("Failed getting template", response);
+        throw new NetworkError("Failed getting template", error);
       });
   },
   insert: (html) => {
@@ -88,3 +129,6 @@ const pageManager = {
 };
 
 export { pageManager };
+function toCaps(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
