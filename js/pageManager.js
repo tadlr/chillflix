@@ -122,6 +122,47 @@ const pageManager = {
     });
     document.dispatchEvent(contentAdded);
   },
+
+  pagination: (results) => {
+    const totalPages = results.total_pages;
+    const currentPage = results.page;
+    if (totalPages > 1) {
+      log(currentPage);
+      // pageManager.fetchPage("pagination", "pagination");
+
+      const path = "/sections/";
+
+      fetch(`${path}pagination.html`)
+        .then((response) => {
+          if (response.status == 404) {
+            pageManager.get("404");
+            throw new NetworkError("Page not found", response);
+          } else if (!response.ok) {
+            new ErrorHandler(
+              "<b>Something went wrong</b>",
+              `${response.statusText}`,
+              "error"
+            );
+            throw new NetworkError("Failed page load", response);
+          } else {
+            return response.text();
+          }
+        })
+        .then((html) => {
+          const htmlParser = new DOMParser();
+          let DOMhtml = htmlParser.parseFromString(html, "text/html");
+          const content = document.getElementById("pagination");
+          content.innerHTML = DOMhtml.body.innerHTML;
+
+          return DOMhtml;
+        })
+        .then((content) => {})
+        .catch((error) => {
+          new ErrorHandler("<b>Something went wrong</b>", `${error}`, "error");
+          throw new NetworkError("Failed getting template", error);
+        });
+    }
+  },
   genID: () => {
     const randID = (Math.random() + 1).toString(36).substring(7);
     return randID;

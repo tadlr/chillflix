@@ -6,42 +6,60 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chillflix - Credits</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body id="page-credits">
     <div id="messages"></div>
-    <header class="header header-fixed header-transparent text-white">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg">
-                <a class="navbar-brand" href="/">
-                    <h1>Chillflix</h1>
-                </a>
-            </nav>
-            <div id="header-form">
-                <form id="search-form">
-                    <div class="form-item">
-                        <label for="search">Enter Movies or Series Title</label>
-                        <input type="text" id="search" name="search" class="" placeholder="Enter Movies or Series Title"
-                            value="" required>
+    <header class="header">
+
+        <nav class="navbar navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="/"><img src="/images/logo.svg" alt="Chillflix" width="145"
+                        height="auto"></a>
+                <form id="search-form" class="d-flex1" role="search">
+                    <div class="input-group mb-3">
+                        <!-- <input type="text" class="form-control" aria-label="Text input with checkbox"> -->
+                        <label for="search" class="form-label sr-only">Enter name</label>
+                        <input type="text" id="search" name="search" class="form-control" placeholder="Enter name"
+                            value="" required autocomplete="off">
+                        <div class="input-group-text">
+                            <div class="btn-group" role="group" aria-label="Type of search">
+                                <input type="radio" class="btn-check" name="kind" value="movies" id="movies"
+                                    autocomplete="off" checked>
+                                <label class="btn btn-outline-light" for="movies">Movies</label>
+
+                                <input type="radio" class="btn-check" name="kind" value="tv" id="tv" autocomplete="off">
+                                <label class="btn btn-outline-light" for="tv">TV Shows</label>
+                            </div>
+                        </div>
+                        <button id="search-btn" class="btn btn-outline-success" value="Search" disabled><span
+                                class="sr-only">Search</span><img class="search-icon" src="/images/search.svg"
+                                alt=""></button>
+                        <button class="btn btn-primary loading-btn" id="loading-btn" type="button" disabled>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="visually-hidden">Loading...</span>
+                        </button>
+
+
                     </div>
-                    <div class="switch-field">
-                        <input type="radio" id="movies" name="kind" value="movies" checked />
-                        <label for="movies">Movies</label>
-                        <input type="radio" id="tv" name="kind" value="tv" />
-                        <label for="tv">TV Shows</label>
-                    </div>
-                    <input id="search-btn" type="submit" value="Search" disabled>
+
                 </form>
             </div>
-        </div>
+        </nav>
+        <div id="messages"></div>
     </header>
-    <main class="main-content">
+    <main class="main-content credit-pg-margin">
         <div id="content" class="content-holder"></div>
     </main>
 
-    <script type="module" src="../js/script.js"></script>
-    <script src="../js/bootstrap/bootstrap.min.js"></script>
+    <footer class="footer bg-dark text-white">
+        Footer
+    </footer>
+
+    <script type="module" src="/js/script.js"></script>
+    <script src="/js/bootstrap/popper.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
 
 </body>
 

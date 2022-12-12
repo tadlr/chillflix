@@ -62,6 +62,8 @@ const moviesAPI = {
             data.total_pages > 1 && data.page >= 2 ? data.page : false,
         });
 
+        pageManager.pagination(data);
+
         return results;
       })
       .then((content) => {
@@ -84,10 +86,11 @@ const moviesAPI = {
       .map((obj, index) => {
         if (index > 5) return;
         const movieID = obj.id;
-        let moviePoster = moviesAPI.getImage(obj.poster_path, "poster", "xx");
+        let moviePoster = moviesAPI.getImage(obj.poster_path, "poster", "og");
         if (!moviePoster) moviePoster = "../images/poster.svg";
 
-        const date = new Date(obj.release_date).toLocaleDateString();
+        const releaseDate = obj.first_air_date ?? obj.release_date;
+        const date = new Date(releaseDate).toLocaleDateString();
         const movieTitle = obj.original_title ?? obj.original_name;
         const rating = obj.vote_average;
 
@@ -102,8 +105,8 @@ const moviesAPI = {
         }
 
         if (type == "single") {
-          cards.classList.add("card-wrapper");
-          cards.classList.add("row");
+          // cards.classList.add("card-wrapper");
+          // cards.classList.add("row");
           let movieBanner = moviesAPI.getImage(
             obj.backdrop_path,
             "backdrop",
@@ -112,7 +115,7 @@ const moviesAPI = {
           if (!movieBanner) movieBanner = "../images/banner.svg";
           let genres = obj.genres
             .map((gen) => {
-              return `<li>${gen.name}</li>`;
+              return `<li class="list-group-item">${gen.name}</li>`;
             })
             .join("");
 
@@ -121,31 +124,50 @@ const moviesAPI = {
               const logo = moviesAPI.getImage(company.logo_path, "logo", "lg");
               let companyInfo =
                 logo != false
-                  ? `<li><img src="${logo}" alt="${company.name} logo"></li>`
-                  : `<li>${company.name}</li>`;
+                  ? `<li class="list-group-item"><span data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top"
+            data-bs-content="${company.name}" data-bs-trigger="hover focus"><img src="${logo}" alt="${company.name} logo"></span></li>`
+                  : `<li class="list-group-item text">${company.name}</li>`;
               return companyInfo;
             })
             .join("");
 
           let language = obj.spoken_languages
             .map((lang) => {
-              return `<li>${lang.name}</li>`;
+              return `<li class="list-group-item">${lang.name}</li>`;
             })
             .join("");
 
           return `
-          <div class="banner"><img src="${movieBanner}" alt="Banner of: ${movieTitle}"></div>
-          <div class="card col-xs-12">
-            <img src="${moviePoster}" alt="${kind} poster of: ${movieTitle}">
-            <div class="card-body">
-              <h3 class="title">${movieTitle} <span class="tagline">${obj.tagline}</span></h3>
-              <p class="description">${obj.overview}</p>
-              <p class="date">${date}</p>
-              <p class="vote-count ${ratingClass}">${rating}</p>
-              <ul>${genres}</ul>
-              <ul>${prodCompanies}</ul>
-              <ul>${language}</ul>
+          <div class="banner" style="background-image: url(${movieBanner});">
+            <div class="container h-100">
+              <div class="row align-items-center h-100">
+                <div class="col">
+                  <h1 class="title">${movieTitle} <span class="tagline">${obj.tagline}</span></h1>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="container pt-5 pb-4">
+          <div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-md-4">
+          
+                <img src="${moviePoster}" class="img-fluid rounded-start" alt="${kind} poster of: ${movieTitle}">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h2 class="card-title">${movieTitle}</h2>
+                  <p class="date">Release date: ${date}</p>
+                  <p class="card-text"><span class="description">${obj.overview}</span></p>
+                  <p class="vote-count">Popular rating: <span class="${ratingClass}">${rating}</span></p>
+                  <p><strong>Genre</strong>: <ul class="list-group list-group-horizontal credit-genre">${genres}</ul></p>
+                  <p><strong>Production Company</strong>: <ul class="list-group list-group-horizontal credit-company">${prodCompanies}</ul></p>
+                  <p><strong>Language</strong>: <ul class="list-group list-group-horizontal credit-lang">${language}</ul> </p>
+                </div>
+              </div>
+            </div>
+          </div>
+            
           </div>`;
         } else if (type == "featured") {
           cards.classList.add("d-flex");
@@ -173,7 +195,6 @@ const moviesAPI = {
           return `
           <div class="card mb-3 border-primary text-bg-dark">
             <div class="row g-1">
-            
               <div class="col-md-4">
                 <img src="${moviePoster}" class="img-fluid rounded-start" alt="${kind} poster of: ${movieTitle}">
               </div>
@@ -185,7 +206,7 @@ const moviesAPI = {
                 </div>
                 <div class="col card-footer position-absolute bottom-0 start-0 w-100 d-flex">
                 <p class="card-text flex-grow-1"><small class="text-muted">Release date: ${date}</small></p>
-                <p class="position-absolute bottom-0 vote-count ${ratingClass}">${rating}</p>
+                <p class="position-absolute bottom-0 vote-count">Popular rating: <span class="${ratingClass}">${rating}</span></p>
                   <a href="/credits/#/${kind}/${movieID}" class="btn btn-primary ">View more information<span class="sr-only"> about ${movieTitle}</span></a>
                 </div>
 
@@ -331,7 +352,7 @@ const moviesAPI = {
                 <img src="${picture}" class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title">${people.name}</h5>
-                  <small class="text-muted">Plays:${people.character}</small>
+                  <small class="text-muted">Plays: ${people.character}</small>
                 </div>
               </div>
             </div>`;
@@ -345,6 +366,13 @@ const moviesAPI = {
       .then((content) => {
         const results = document.getElementById("credits");
         results.append(content);
+
+        const popoverTriggerList = document.querySelectorAll(
+          '[data-bs-toggle="popover"]'
+        );
+        const popoverList = [...popoverTriggerList].map(
+          (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
+        );
       })
       .catch((error) => {
         new ErrorHandler("<b>Something went wrong</b>", `${error}`, "error");
@@ -380,18 +408,12 @@ const moviesAPI = {
         return true;
       })
       .then(() => {
-        if (type == "movie") moviesAPI.getFeatured("tv");
-        return true;
-      })
-      .then(() => {
-        if (type == "tv") {
-          const popoverTriggerList = document.querySelectorAll(
-            '[data-bs-toggle="popover"]'
-          );
-          const popoverList = [...popoverTriggerList].map(
-            (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
-          );
-        }
+        const popoverTriggerList = document.querySelectorAll(
+          '[data-bs-toggle="popover"]'
+        );
+        const popoverList = [...popoverTriggerList].map(
+          (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
+        );
       })
       .catch((error) => {
         new ErrorHandler("<b>Something went wrong</b>", `${error}`, "error");

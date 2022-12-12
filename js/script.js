@@ -26,8 +26,8 @@ document.addEventListener(
           break;
         case "credits":
           moviesAPI.getItem();
-
           search.init("/");
+
           break;
       }
     });
