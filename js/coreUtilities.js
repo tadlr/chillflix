@@ -41,11 +41,6 @@ class ErrorHandler extends NetworkError {
 
     alert.classList.add(...classes);
     document.getElementById("messages").prepend(alert);
-
-    setTimeout(() => {
-      const alertBox = bootstrap.Alert.getOrCreateInstance("#" + randID);
-      alertBox.close();
-    }, 10500);
   }
 }
 

@@ -84,7 +84,7 @@ const moviesAPI = {
 
     let html = data
       .map((obj, index) => {
-        if (index > 5) return;
+        if (index > 3) return;
         const movieID = obj.id;
         let moviePoster = moviesAPI.getImage(obj.poster_path, "poster", "og");
         if (!moviePoster) moviePoster = "../images/poster.svg";
@@ -170,27 +170,17 @@ const moviesAPI = {
             
           </div>`;
         } else if (type == "featured") {
-          cards.classList.add("d-flex");
+          cards.classList.add("container");
 
           return `
-          <div class="d-flex align-items-stretch">
-          <div class="card h-100">
-          <div class="card-header">
-          
-          <a href="/credits/#/${kind}/${movieID}"><img src="${moviePoster}" class="card-img-top" alt="${kind} poster of: ${movieTitle}"></a>
-          
-          </div>
-          
-              <div class="card-footer bg-light">
-              <div class="d-grid gap-2">
-
-              <span data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top"
-            data-bs-content="${movieTitle}" data-bs-trigger="hover focus">
-              <a href="/credits/#/${kind}/${movieID}" class="btn btn-primary w-100">View more <span class="sr-only"> about ${movieTitle}</span></a>
-              </span>
-              </div>
-            </div></div>
-          </div>`;
+          <a class="card" href="/credits/#/${kind}/${movieID}"
+            aria-label="${movieTitle}">
+            <img src="${moviePoster}" class="card-img-top" alt="${kind} poster of: ${movieTitle}">
+            <div class="card__content">
+                <h3 class="card__title sr-only">${movieTitle}</h3>
+                <span class="btn">View more <span class="sr-only"> about ${movieTitle}</span></span>
+            </div>
+          </a>`;
         } else {
           return `
           <div class="card mb-3 border-primary text-bg-dark">
@@ -366,13 +356,6 @@ const moviesAPI = {
       .then((content) => {
         const results = document.getElementById("credits");
         results.append(content);
-
-        const popoverTriggerList = document.querySelectorAll(
-          '[data-bs-toggle="popover"]'
-        );
-        const popoverList = [...popoverTriggerList].map(
-          (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
-        );
       })
       .catch((error) => {
         new ErrorHandler("<b>Something went wrong</b>", `${error}`, "error");
@@ -407,14 +390,7 @@ const moviesAPI = {
         results.append(cards);
         return true;
       })
-      .then(() => {
-        const popoverTriggerList = document.querySelectorAll(
-          '[data-bs-toggle="popover"]'
-        );
-        const popoverList = [...popoverTriggerList].map(
-          (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
-        );
-      })
+
       .catch((error) => {
         new ErrorHandler("<b>Something went wrong</b>", `${error}`, "error");
         throw new NetworkError("Failed fetching movies", error);

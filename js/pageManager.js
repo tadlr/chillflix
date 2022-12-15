@@ -15,6 +15,7 @@ const pageManager = {
         dataStorage.setSession("search_query", attributes);
       } else {
         pageManager.get("home");
+        document.getElementById("navbar").classList.add("home");
       }
     }
   },
@@ -62,7 +63,7 @@ const pageManager = {
   },
   fetchPage: (page) => {
     const pageName = `${page}.html`;
-    const path = "/sections/";
+    const path = "./sections/";
 
     fetch(`${path}${pageName}`)
       .then((response) => {
@@ -130,7 +131,7 @@ const pageManager = {
       log(currentPage);
       // pageManager.fetchPage("pagination", "pagination");
 
-      const path = "/sections/";
+      const path = "./sections/";
 
       fetch(`${path}pagination.html`)
         .then((response) => {
