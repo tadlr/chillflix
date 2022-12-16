@@ -20,7 +20,7 @@ class ErrorHandler extends NetworkError {
     let classes = ["alert", "alert-dismissible", "fade", "show"];
     const alert = document.createElement("div");
     alert.setAttribute("role", "alert");
-    alert.innerHTML = `${msg} ${response}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
+    alert.innerHTML = `${msg} ${response}`;
 
     switch (status) {
       case "error":

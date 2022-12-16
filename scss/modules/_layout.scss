@@ -1,0 +1,14 @@
+.container {
+  width: min(75em, 100%);
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.container--narrow {
+  width: min(35em, 100%);
+}
+
+.content-holder {
+  min-height: 30vh;
+}

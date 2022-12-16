@@ -1,0 +1,143 @@
+.card-group {
+  background-color: var(--color-secondary-pale);
+}
+
+.card-group .container {
+  --cols: 1;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  padding-top: 1.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.card-group__title {
+  grid-column: 1 / -1;
+}
+
+.featured--media {
+  &:not(.show) {
+    display: none;
+  }
+}
+
+.card {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 0.25rem 0.5rem #0002;
+  background-color: #fff;
+  color: #000;
+  text-decoration: none;
+
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 0.25rem 0.5rem #0002;
+  background-color: #fff;
+  color: #000;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+  -webkit-transition: transform 0.2s, box-shadow 0.2s;
+  -moz-transition: transform 0.2s, box-shadow 0.2s;
+  -ms-transition: transform 0.2s, box-shadow 0.2s;
+  -o-transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover,
+  &:focus-visible {
+    color: #000;
+    transform: translateY(-0.5rem);
+    -webkit-transform: translateY(-0.5rem);
+    -moz-transform: translateY(-0.5rem);
+    -ms-transform: translateY(-0.5rem);
+    -o-transform: translateY(-0.5rem);
+    box-shadow: 0 0.5rem 0.75rem #0002;
+  }
+}
+
+.featured--card {
+  .card__content {
+    padding: 0;
+    .btn {
+      width: 100%;
+      border-radius: 0 0 0.25em 0.25em;
+    }
+  }
+}
+
+.card__image img {
+  object-fit: cover;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.card__content {
+  padding: 1.5rem;
+  padding-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  align-items: center;
+  padding-bottom: 0;
+  text-align: center;
+  border-top: 1px solid #333;
+}
+
+.card__footer {
+  text-align: center;
+  p {
+    margin-bottom: 0;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .btn {
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+}
+
+.card__title {
+  font-size: 1.325rem;
+  color: var(--color-secondary-dark);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.card__text {
+  flex-grow: 2;
+}
+
+@media only screen and (min-width: 45em) {
+  .card-group .container {
+    --cols: 2;
+  }
+
+  .card__title {
+    font-size: 1.438rem;
+  }
+}
+
+@media only screen and (min-width: 60em) {
+  .card-group .container {
+    --cols: 4;
+  }
+
+  .card__search-results.card-group {
+    background-color: transparent;
+    .container {
+      --cols: 3;
+    }
+  }
+
+  .movie-credits.card-group {
+    background-color: transparent;
+    .container {
+      --cols: 3;
+    }
+  }
+
+  .card__title {
+    font-size: 1.563rem;
+  }
+}

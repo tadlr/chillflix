@@ -1,5 +1,6 @@
 import { NetworkError, ErrorHandler, log } from "./coreUtilities.js";
 import { dataStorage } from "./dataStorage.js";
+
 const pageManager = {
   target: null,
   page: null,
@@ -7,13 +8,16 @@ const pageManager = {
     const attributes = pageManager.getHash();
     const body = document.getElementById("page-credits");
     if (body) {
+      pageManager.loaderAdd("content");
       pageManager.get("credits");
       dataStorage.setSession("credit_query", attributes);
     } else {
       if (attributes.page) {
+        pageManager.loaderAdd("content");
         pageManager.get(attributes.page);
         dataStorage.setSession("search_query", attributes);
       } else {
+        pageManager.loaderAdd("content");
         pageManager.get("home");
         document.getElementById("navbar").classList.add("home");
       }
@@ -23,6 +27,7 @@ const pageManager = {
     pageManager.target = target;
     pageManager.page = page;
     if (page.length != 0) {
+      pageManager.loaderAdd(target);
       pageManager.fetchPage(page);
     } else {
       new ErrorHandler(
@@ -58,17 +63,16 @@ const pageManager = {
       window.location.hash = `${type}${page}${query}${pagination}`;
     }
     document.title = `Chillflix - ${toCaps(attributes.page)} ${toCaps(
-      attributes.query
+      decodeURIComponent(attributes.query)
     )}`;
   },
   fetchPage: (page) => {
     const pageName = `${page}.html`;
-    const path = "./sections/";
+    const path = "../sections/";
 
     fetch(`${path}${pageName}`)
       .then((response) => {
         if (response.status == 404) {
-          pageManager.get("404");
           throw new NetworkError("Page not found", response);
         } else if (!response.ok) {
           new ErrorHandler(
@@ -99,6 +103,10 @@ const pageManager = {
             pageManager.get(target, id);
           });
         }
+        return content;
+      })
+      .then(() => {
+        pageManager.loaderRemove(pageManager.target);
       })
       .catch((error) => {
         new ErrorHandler(
@@ -123,50 +131,55 @@ const pageManager = {
     });
     document.dispatchEvent(contentAdded);
   },
-
   pagination: (results) => {
     const totalPages = results.total_pages;
     const currentPage = results.page;
+    const htmlTarget = document.getElementById("pagination");
+
+    document.querySelector(".total-results .num").innerHTML =
+      results.total_results;
+    document.querySelector(".total-pages .start").innerHTML = currentPage;
+    document.querySelector(".total-pages .end").innerHTML = totalPages;
+
     if (totalPages > 1) {
-      log(currentPage);
-      // pageManager.fetchPage("pagination", "pagination");
+      const ulPag = document.createElement("ul");
+      ulPag.classList.add("pagination");
+      for (let i = 1; i <= totalPages; i++) {
+        const item = document.createElement("li");
+        const link = document.createElement("a");
+        item.classList.add("pagination-item");
 
-      const path = "./sections/";
+        if (currentPage == i) {
+          item.classList.add("active");
+          link.innerHTML = `<span class="sr-only">Page </span>${i}<span class="sr-only"> of ${totalPages}. Current page</span>`;
+        } else {
+          link.innerHTML = `<span class="sr-only">Page </span>${i}<span class="sr-only"> of ${totalPages}</span>`;
+        }
 
-      fetch(`${path}pagination.html`)
-        .then((response) => {
-          if (response.status == 404) {
-            pageManager.get("404");
-            throw new NetworkError("Page not found", response);
-          } else if (!response.ok) {
-            new ErrorHandler(
-              "<b>Something went wrong</b>",
-              `${response.statusText}`,
-              "error"
-            );
-            throw new NetworkError("Failed page load", response);
-          } else {
-            return response.text();
-          }
-        })
-        .then((html) => {
-          const htmlParser = new DOMParser();
-          let DOMhtml = htmlParser.parseFromString(html, "text/html");
-          const content = document.getElementById("pagination");
-          content.innerHTML = DOMhtml.body.innerHTML;
+        const hash = pageManager.getHash();
+        const path = `./#/${hash.type}/${hash.page}/${hash.query}${
+          i == 1 ? "" : `/${i}`
+        }`;
 
-          return DOMhtml;
-        })
-        .then((content) => {})
-        .catch((error) => {
-          new ErrorHandler("<b>Something went wrong</b>", `${error}`, "error");
-          throw new NetworkError("Failed getting template", error);
-        });
+        link.setAttribute("href", path);
+        item.append(link);
+        ulPag.append(item);
+      }
+
+      htmlTarget.innerHTML = ulPag.outerHTML;
     }
   },
   genID: () => {
     const randID = (Math.random() + 1).toString(36).substring(7);
     return randID;
+  },
+  loaderAdd: (target) => {
+    let targetElmt = document.getElementById(target);
+    targetElmt.classList.add("loading-ctn");
+  },
+  loaderRemove: (target) => {
+    let targetElmt = document.getElementById(target);
+    targetElmt.classList.remove("loading-ctn");
   },
 };
 

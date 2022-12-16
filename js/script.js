@@ -1,4 +1,4 @@
-import { NetworkError, ErrorHandler, log } from "./coreUtilities.js";
+import { log } from "./coreUtilities.js";
 import { pageManager } from "./pageManager.js";
 import { moviesAPI } from "./moviesAPI.js";
 import { search } from "./search.js";
@@ -22,13 +22,13 @@ document.addEventListener(
           search.init();
           break;
         case "search":
+          document.getElementById("main-banner").classList.add("search");
           moviesAPI.init();
           search.init();
           break;
         case "credits":
-          moviesAPI.getItem();
           search.init("/");
-
+          moviesAPI.getItem();
           break;
       }
     });
@@ -64,6 +64,20 @@ document.addEventListener(
 
           banner.classList.remove("type-tv", "type-movies");
           banner.classList.add(`type-${value}`);
+
+          const visibleMedia = document.querySelectorAll(
+            ".featured--media.show"
+          );
+
+          visibleMedia.forEach((each) => {
+            each.classList.remove("show");
+          });
+
+          const featured = document.getElementById(`featured-${value}`);
+
+          if (featured) featured.classList.add("show");
+
+          log(featured, visibleMedia);
 
           if (value == "tv") value = "tv shows";
           label[0].innerHTML = value;

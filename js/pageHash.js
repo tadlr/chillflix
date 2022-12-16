@@ -1,3 +1,0 @@
-const pageHash = {};
-
-export { pageHash };

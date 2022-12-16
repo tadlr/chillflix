@@ -1,0 +1,39 @@
+.pagination {
+  list-style: none;
+  .pagination-item {
+    display: inline-block;
+
+    &.active {
+      a {
+        background-color: #333;
+        color: #f6f6f6;
+      }
+    }
+    a {
+      text-decoration: none;
+      color: #333;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid #333;
+    }
+    &:first-of-type {
+      a {
+        border-radius: 10px 0 0 10px;
+      }
+    }
+
+    &:last-of-type {
+      a {
+        border-radius: 0 10px 10px 0;
+      }
+    }
+
+    &:hover,
+    &:focus {
+      cursor: pointer;
+      a {
+        background-color: #333;
+        color: #f6f6f6;
+      }
+    }
+  }
+}

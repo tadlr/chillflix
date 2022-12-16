@@ -1,0 +1,171 @@
+.banner {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(53, 52, 52, 0.6),
+      rgba(23, 18, 62, 0.6)
+    ),
+    url("../images/movies.jpg");
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+
+  .container {
+    transition: min-height 0.5s ease-in, height 0.5s ease-in;
+  }
+
+  &.search {
+    .container {
+      min-height: 30vh;
+      padding: 7rem 0.5rem 0;
+
+      .banner__title,
+      .banner__text {
+        opacity: 0;
+        display: none;
+      }
+    }
+  }
+
+  &.type- {
+    &tv {
+      background-image: linear-gradient(
+          to bottom,
+          rgba(53, 52, 52, 0.6),
+          rgba(23, 18, 62, 0.6)
+        ),
+        url("../images/tv.jpg");
+    }
+    &movies {
+      background-image: linear-gradient(
+          to bottom,
+          rgba(53, 52, 52, 0.6),
+          rgba(23, 18, 62, 0.6)
+        ),
+        url("../images/movies.jpg");
+    }
+  }
+
+  &.credit-banner {
+    position: relative;
+    background-position: top center;
+    .container {
+      z-index: 1;
+      position: relative;
+      justify-content: start;
+      align-items: center;
+      min-height: 60vh;
+      margin-bottom: 5rem;
+
+      .title {
+        color: $white;
+        min-width: 20rem;
+        margin-bottom: 0;
+        font-weight: 400;
+        text-align: center;
+        min-height: 12rem;
+        display: grid;
+
+        background: rgba(0, 0, 0, 0.72);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(0, 0, 0, 0.3);
+
+        .tagline {
+          align-self: flex-end;
+          border-radius: 0 0 16px 16px;
+          padding: 0.5rem 1rem;
+          color: $white;
+          font-size: 1rem;
+          // display: block;
+        }
+        .main-title {
+          padding: 0 1rem;
+        }
+        .kind {
+          font-size: 0.8rem;
+          text-transform: uppercase;
+          letter-spacing: 2.2px;
+          align-self: flex-start;
+          padding: 0.5rem 1rem;
+          color: #fff;
+          border-radius: 16px 16px 0 0;
+        }
+
+        .kind,
+        .tagline {
+          &:empty {
+            display: none;
+          }
+          background: rgba(255, 255, 255, 0.2);
+
+          backdrop-filter: blur(5px);
+          -webkit-backdrop-filter: blur(5px);
+        }
+      }
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+
+      height: 100%;
+
+      /* From https://css.glass */
+      // background: rgba(121, 121, 121, 0.17);
+      // border-radius: 16px;
+      // box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      // backdrop-filter: blur(2.7px);
+      // -webkit-backdrop-filter: blur(2.7px);
+    }
+  }
+}
+
+.banner .container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 55vh;
+  padding: 10rem 1.5rem 0;
+  margin-top: 0;
+}
+
+.banner__content {
+  width: min(35em, 100%);
+  text-align: center;
+}
+
+.banner__title {
+  font-size: 1.756rem;
+  line-height: 1.3;
+  color: var(--color-secondary);
+  margin-bottom: 0;
+}
+
+.banner__text {
+  font-size: 1.15rem;
+  color: #fff;
+}
+
+@media only screen and (min-width: 45em) {
+  .banner__title {
+    font-size: 2.069rem;
+  }
+
+  .banner__text {
+    font-size: 1.2rem;
+  }
+}
+
+@media only screen and (min-width: 60em) {
+  .banner__title {
+    font-size: 2.444rem;
+  }
+
+  .banner__text {
+    font-size: 1.25rem;
+  }
+}

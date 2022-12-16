@@ -15,7 +15,6 @@ const dataStorage = {
     sessionStorage.removeItem(key);
   },
   encode: (value) => {
-
     if (typeof value == "object" || typeof value == "array") {
       value = JSON.stringify(value);
     }

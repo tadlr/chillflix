@@ -1,0 +1,44 @@
+*:focus-visible {
+  outline: 0.125rem solid var(--color-secondary);
+  outline-offset: 0.125rem;
+}
+
+.skip-links {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.skip-links a {
+  position: absolute;
+  top: -10rem;
+  left: 0.5rem;
+  z-index: 100000;
+  display: inline-block;
+  padding: 0.55em 1.5em 0.5em;
+  background-color: var(--color-secondary);
+  border: 0.125rem solid var(--color-secondary);
+  color: #000;
+  border-radius: 0.25em;
+
+  /* link necessary styles */
+  text-decoration: none;
+}
+
+.skip-links a:focus {
+  top: 0.75rem;
+  outline: 0;
+}
+
+.sr-only {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal !important;
+}

@@ -1,0 +1,92 @@
+.movie-details {
+  display: flex;
+  .sticky {
+    position: sticky;
+    top: 5rem;
+  }
+  .col- {
+    &left {
+      flex: 1;
+    }
+    &right {
+      flex: 2;
+      padding: 0 1.5rem;
+    }
+  }
+
+  .vote-count {
+    font-weight: bold;
+    span {
+      padding: 0.4rem 1rem;
+    }
+  }
+
+  .card-title {
+    text-align: center;
+  }
+
+  .list-title {
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+
+  .list-group {
+    list-style: none;
+    padding: 0;
+    li {
+      display: inline-block;
+      border: 1px solid #333;
+      padding: 0.3rem 1.5rem;
+      text-align: center;
+
+      vertical-align: top;
+      align-content: center;
+    }
+
+    &.credit-company {
+      --cols: 3;
+      display: grid;
+      gap: 0.5rem 0.5rem;
+      grid-template-columns: repeat(var(--cols), 1fr);
+      padding-top: 1.5rem;
+      padding-bottom: 0.5rem;
+
+      li {
+        display: flex;
+        flex-direction: column;
+        border: none;
+        justify-content: center;
+        align-content: center;
+        min-height: 5rem;
+        background: #eee;
+        small {
+          padding-top: 1.2rem;
+          display: inline-block;
+          font-weight: bold;
+        }
+        img {
+          max-width: 9rem;
+          max-height: 5rem;
+          margin: auto;
+        }
+      }
+    }
+  }
+}
+
+.vote-count {
+  font-weight: bold;
+  span {
+    padding: 0.4rem 1rem;
+  }
+}
+
+.good-score {
+  background: #94d994;
+}
+.low-score {
+  background: #ec957a;
+}
+.average-score {
+  background: #e6e481;
+}

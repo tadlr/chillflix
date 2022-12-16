@@ -1,0 +1,29 @@
+.regular-text .container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+.regular-text__title,
+.regular-text__content {
+  grid-column: span 12;
+}
+
+.regular-text__title {
+  margin: 0;
+}
+
+@media only screen and (min-width: 60em) {
+  .regular-text__title {
+    grid-column: span 4;
+  }
+
+  .regular-text__content {
+    grid-column: span 8;
+  }
+}
+
+.no-results {
+}

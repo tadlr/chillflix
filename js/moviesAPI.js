@@ -62,6 +62,8 @@ const moviesAPI = {
             data.total_pages > 1 && data.page >= 2 ? data.page : false,
         });
 
+        document.querySelector("#search-title .query").innerHTML =
+          decodeURIComponent(query.query);
         pageManager.pagination(data);
 
         return results;
@@ -84,7 +86,6 @@ const moviesAPI = {
 
     let html = data
       .map((obj, index) => {
-        if (index > 3) return;
         const movieID = obj.id;
         let moviePoster = moviesAPI.getImage(obj.poster_path, "poster", "og");
         if (!moviePoster) moviePoster = "../images/poster.svg";
@@ -124,8 +125,7 @@ const moviesAPI = {
               const logo = moviesAPI.getImage(company.logo_path, "logo", "lg");
               let companyInfo =
                 logo != false
-                  ? `<li class="list-group-item"><span data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top"
-            data-bs-content="${company.name}" data-bs-trigger="hover focus"><img src="${logo}" alt="${company.name} logo"></span></li>`
+                  ? `<li class="list-group-item"><img src="${logo}" alt="${company.name} logo"><small>${company.name}</small></li>`
                   : `<li class="list-group-item text">${company.name}</li>`;
               return companyInfo;
             })
@@ -136,40 +136,49 @@ const moviesAPI = {
               return `<li class="list-group-item">${lang.name}</li>`;
             })
             .join("");
-
+          cards.classList.add("single-movie");
           return `
-          <div class="banner" style="background-image: url(${movieBanner});">
-            <div class="container h-100">
-              <div class="row align-items-center h-100">
-                <div class="col">
-                  <h1 class="title">${movieTitle} <span class="tagline">${obj.tagline}</span></h1>
-                </div>
+            <div class="single-movie">
+              <header class="banner credit-banner" style="background-image: url(${movieBanner});">
+                  <div class="container">
+                      <div class="row align-items-center">
+                          <div class="col">
+                              <h1 class="title sr-only"> <!-- Hidden element. Steve I wasn't able to make it look good -->
+                                <span class="kind">${kind}</span>
+                                <span class="main-title">${movieTitle}</span>
+                                <span class="tagline">${obj.tagline}</span>
+                              </h1>
+                          </div>
+                      </div>
+                  </div>
+              </header>
+              <div class="container movie-details">
+                  <div class="col-left">
+                      <div class="sticky">
+                      <img src="${moviePoster}" class="movie poster" alt="${kind} poster of: ${movieTitle}">
+                      </div>
+                      </div>
+                      <div class="col-right">
+                      <section class="card-body">
+                      <h2 class="card-title">${movieTitle}</h2>
+                      <p class="date">Release date: ${date}</p>
+                      <p class="card-text"><span class="description">${obj.overview}</span></p>
+                          <p class="vote-count">Popular rating: <span class="${ratingClass}">${rating}</span></p>
+                          <p class="list-title">Genre</p> <ul class="list-group list-group-horizontal credit-genre">${genres}</ul>
+                          <p class="list-title">Production Company</p> <ul class="list-group list-group-horizontal credit-company">
+                          ${prodCompanies}</ul>
+                          <p class="list-title">Language</p> <ul class="list-group list-group-horizontal credit-lang">${language}
+                          </ul>
+                      </section>
+                      <section>
+                          <h3>Cast</h3>
+                          <div class="movie-credits card-group" id="credits"></div>
+                      </section>
+                  </div>
               </div>
-            </div>
-          </div>
-          <div class="container pt-5 pb-4">
-          <div class="card mb-3">
-            <div class="row g-0">
-              <div class="col-md-4">
-          
-                <img src="${moviePoster}" class="img-fluid rounded-start" alt="${kind} poster of: ${movieTitle}">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h2 class="card-title">${movieTitle}</h2>
-                  <p class="date">Release date: ${date}</p>
-                  <p class="card-text"><span class="description">${obj.overview}</span></p>
-                  <p class="vote-count">Popular rating: <span class="${ratingClass}">${rating}</span></p>
-                  <p><strong>Genre</strong>: <ul class="list-group list-group-horizontal credit-genre">${genres}</ul></p>
-                  <p><strong>Production Company</strong>: <ul class="list-group list-group-horizontal credit-company">${prodCompanies}</ul></p>
-                  <p><strong>Language</strong>: <ul class="list-group list-group-horizontal credit-lang">${language}</ul> </p>
-                </div>
-              </div>
-            </div>
-          </div>
-            
           </div>`;
         } else if (type == "featured") {
+          if (index > 3) return;
           cards.classList.add("container");
 
           return `
@@ -182,27 +191,24 @@ const moviesAPI = {
             </div>
           </a>`;
         } else {
+          cards.classList.add("container");
+          const shortTxT = obj.overview.substring(0, 70) + "...";
           return `
-          <div class="card mb-3 border-primary text-bg-dark">
-            <div class="row g-1">
-              <div class="col-md-4">
-                <img src="${moviePoster}" class="img-fluid rounded-start" alt="${kind} poster of: ${movieTitle}">
-              </div>
-              <div class="col-md-8 position-relative">
-              <div class="card-header"><h3 class="card-title">${movieTitle}</h3></div>
-                <div class="card-body">
-                  <p class="card-text">${obj.overview}</p>
-                        
-                </div>
-                <div class="col card-footer position-absolute bottom-0 start-0 w-100 d-flex">
-                <p class="card-text flex-grow-1"><small class="text-muted">Release date: ${date}</small></p>
-                <p class="position-absolute bottom-0 vote-count">Popular rating: <span class="${ratingClass}">${rating}</span></p>
-                  <a href="/credits/#/${kind}/${movieID}" class="btn btn-primary ">View more information<span class="sr-only"> about ${movieTitle}</span></a>
-                </div>
-
-              </div>
+          
+          <a class="card" href="/credits/#/${kind}/${movieID}"
+            aria-label="${movieTitle}">
+            <img src="${moviePoster}" class="card-img-top" alt="${kind} poster of: ${movieTitle}">
+            <div class="card__content">
+                <h3 class="card__title">${movieTitle}</h3>
+                <p class="card-text">${shortTxT}</p>  
+                
             </div>
-          </div>`;
+            <div class="card__footer">
+              <p class="card-text"><small class="text-muted">Release date: ${date}</small></p>
+              <p class="position-absolute bottom-0 vote-count">Popular rating: <span class="${ratingClass}">${rating}</span></p>
+              <span class="btn">View more <span class="sr-only"> about ${movieTitle}</span></span>
+            </div>
+          </a>`;
         }
       })
       .join("");
@@ -325,7 +331,7 @@ const moviesAPI = {
       })
       .then((data) => {
         const accordion = document.createElement("div");
-        accordion.classList.add("row", "row-cols-1", "row-cols-md-6");
+        accordion.classList.add("container");
 
         const cast = data.cast;
 
@@ -337,13 +343,12 @@ const moviesAPI = {
               "lg"
             );
             if (!picture) picture = "../images/profile.svg";
-            return `  <div class="col">
-              <div class="card h-100">
-                <img src="${picture}" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">${people.name}</h5>
-                  <small class="text-muted">Plays: ${people.character}</small>
-                </div>
+            return `
+            <div class="card">
+              <img src="${picture}" class="card-img-top" alt="${people.name} portrait">
+              <div class="card__content">
+                  <h3 class="card__title">${people.name}</h3>
+                  <small class="card-text">Plays: ${people.character}</small>
               </div>
             </div>`;
           })

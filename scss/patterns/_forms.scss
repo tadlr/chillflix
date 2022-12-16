@@ -1,0 +1,216 @@
+.contact {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 0;
+  background-color: var(--color-secondary);
+}
+
+.contact__form {
+  padding: 3rem 1.5rem;
+  --cols: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  gap: 1.5rem;
+  background-color: #fafafa;
+  border-radius: 1.5rem;
+  box-shadow: 0 0.25rem 1rem #0002;
+  overflow: hidden;
+}
+
+.contact__title {
+  margin-bottom: 0.5rem;
+}
+
+.contact__image {
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-secondary);
+  background-image: url("../images/sign-up.jpg");
+  background-size: cover;
+  background-position: center;
+  border-radius: 1.5rem;
+  box-shadow: 0 0.25rem 1rem #0002;
+}
+
+.form-unit.full {
+  grid-column: 1 / -1;
+}
+
+.form-control {
+  padding: 1rem 0.5rem;
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+
+input,
+textarea,
+select {
+  display: block;
+  width: 100%;
+  padding: 0.25rem 0.35rem;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.25rem;
+  font-size: inherit;
+  font-family: inherit;
+  color: #000;
+  background-color: #fff;
+}
+
+select {
+  padding: 0.375rem 0.35rem;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not(
+    [type="submit"]
+  ):focus-visible,
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):valid,
+textarea:valid,
+select:valid {
+  border-color: var(--color-secondary);
+}
+
+label,
+.label {
+  display: block;
+  width: 100%;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.checkbox-radio {
+  display: contents;
+}
+
+.input-holder {
+  position: relative;
+}
+
+.checkbox-radio__item {
+  text-transform: none;
+  font-weight: normal;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: auto;
+}
+
+.checkbox-radio__item + .checkbox-radio__item {
+  margin-left: 1.5rem;
+}
+
+.checkbox-radio__item input,
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+  appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid var(--color-secondary);
+  margin: 0;
+}
+
+input[type="radio"] {
+  border-radius: 50%;
+}
+
+input[type="radio"]:checked,
+input[type="checkbox"]:checked {
+  background-size: 100% auto;
+  background-position: center;
+}
+
+input[type="radio"]:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 256 256'%3E%3Ccircle cx='128' cy='128' r='70.4'/%3E%3C/svg%3E");
+}
+
+input[type="checkbox"]:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 256 256'%3E%3Cpath fill='none' stroke='%23000' stroke-miterlimit='10' stroke-width='50' d='M49.9 130.1l50.8 50.7L206.1 75.2'/%3E%3C/svg%3E");
+}
+
+.checkbox-radio__item span {
+  font-size: 1rem;
+}
+
+@media only screen and (min-width: 45em) {
+  .form-grid {
+    --cols: 2;
+  }
+
+  .contact__wrap {
+    --cols: 3;
+  }
+
+  .contact__form {
+    grid-column: span 2;
+    padding: 3rem;
+    --cols: 2;
+  }
+
+  .contact__image {
+    aspect-ratio: auto;
+  }
+}
+
+@media only screen and (min-width: 60em) {
+  .contact__wrap {
+    --cols: 2;
+  }
+
+  .contact__form {
+    grid-column: span 1;
+  }
+}
+.radio__switch {
+  clear: both;
+  display: flex;
+}
+
+.radio__switch_item {
+  position: absolute;
+  left: -9999em;
+  top: -9999em;
+
+  & + label {
+    float: left;
+    padding: 0.7em 1em;
+    cursor: pointer;
+    border: 0.0625rem solid #28608f;
+    margin-right: -0;
+    color: #fff;
+    background-color: rgba(31, 71, 106, 0.2);
+    border-radius: 0 0 0.25rem 0.25rem;
+    -webkit-border-radius: 0 0 0.25rem 0.25rem;
+    -moz-border-radius: 0 0 0.25rem 0.25rem;
+    -ms-border-radius: 0 0 0.25rem 0.25rem;
+    -o-border-radius: 0 0 0.25rem 0.25rem;
+
+    &:first-of-type {
+      border-radius: 0 0 0rem 0.25rem;
+      -webkit-border-radius: 0 0 0rem 0.25rem;
+      -moz-border-radius: 0 0 0rem 0.25rem;
+      -ms-border-radius: 0 0 0rem 0.25rem;
+      -o-border-radius: 0 0 0rem 0.25rem;
+    }
+
+    &:last-of-type {
+      border-radius: 0 0 0.25rem 0rem;
+    }
+  }
+
+  &:checked + label {
+    background-color: #1f476a;
+    position: relative;
+    &::before {
+      content: "";
+      background-image: url("../../images/checked.svg");
+      width: 15px;
+      height: 15px;
+      display: inline-block;
+      background-size: cover;
+      position: absolute;
+      left: 10px;
+      top: 14px;
+    }
+  }
+}

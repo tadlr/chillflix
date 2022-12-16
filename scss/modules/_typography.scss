@@ -1,0 +1,79 @@
+h1 {
+  font-size: 2.019rem;
+  line-height: 1.3;
+}
+
+h2 {
+  font-size: 1.756rem;
+  line-height: 1.3;
+}
+
+h3 {
+  color: var(--color-secondary-dark);
+  font-size: 1.525rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: 1.325rem;
+  color: var(--color-accent);
+  margin: 0;
+  line-height: 1.3;
+}
+
+h5 {
+  font-size: 1.15rem;
+  font-weight: normal;
+  line-height: 1.3;
+}
+
+h6 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+@media only screen and (min-width: 45em) {
+  h1 {
+    font-size: 2.481rem;
+  }
+
+  h2 {
+    font-size: 2.069rem;
+  }
+
+  h3 {
+    font-size: 1.725rem;
+  }
+
+  h4 {
+    font-size: 1.438rem;
+  }
+
+  h5 {
+    font-size: 1.2rem;
+  }
+}
+
+@media only screen and (min-width: 60em) {
+  h1 {
+    font-size: 3.056rem;
+  }
+
+  h2 {
+    font-size: 2.444rem;
+  }
+
+  h3 {
+    font-size: 1.956rem;
+  }
+
+  h4 {
+    font-size: 1.563rem;
+  }
+
+  h5 {
+    font-size: 1.25rem;
+  }
+}
