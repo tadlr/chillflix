@@ -33,25 +33,25 @@ document.addEventListener(
       }
     });
 
-    const header = document.getElementById("navbar");
-    window.onscroll = () => {
-      let winPosition = window.pageYOffset;
+    // const header = document.getElementById("navbar");
+    // window.onscroll = () => {
+    //   let winPosition = window.pageYOffset;
 
-      winPosition < 70
-        ? header.classList.add("top")
-        : header.classList.remove("top", "navbar-dark");
+    //   winPosition < 70
+    //     ? header.classList.add("top")
+    //     : header.classList.remove("top", "navbar-dark");
 
-      winPrevPosition > winPosition
-        ? (header.style.top = "0")
-        : (header.style.top = "-150px");
+    //   winPrevPosition > winPosition
+    //     ? (header.style.top = "0")
+    //     : (header.style.top = "-150px");
 
-      winPrevPosition = winPosition;
-    };
+    //   winPrevPosition = winPosition;
+    // };
 
-    let winPrevPosition = window.pageYOffset;
-    winPrevPosition < 70
-      ? header.classList.add("top")
-      : header.classList.remove("top");
+    // let winPrevPosition = window.pageYOffset;
+    // winPrevPosition < 70
+    //   ? header.classList.add("top")
+    //   : header.classList.remove("top");
 
     const toggle = document.querySelectorAll("[name=kind]");
     const banner = document.getElementById("main-banner");

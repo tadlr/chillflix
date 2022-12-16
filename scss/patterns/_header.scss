@@ -1,5 +1,5 @@
 .main-nav {
-  position: fixed;
+  position: absolute;
   width: 100%;
   z-index: 1000;
 
@@ -23,11 +23,17 @@
   }
   .container {
     padding: 1.5rem;
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
     min-height: 3.5rem;
+  }
+
+  @media screen and (min-width: 45em) {
+    .container {
+      display: flex;
+    }
   }
   .logo {
     display: flex;
@@ -51,8 +57,22 @@
 
   &.credits {
     .search-movies {
-      display: inline-flex;
+      display: block;
       position: relative;
+
+      display: block;
+      position: absolute;
+      top: 6rem;
+      width: 90%;
+      left: 5%;
+
+      @media screen and (min-width: 45em) {
+        display: inline-flex;
+        position: initial;
+        top: initial;
+        width: initial;
+        left: initial;
+      }
 
       .input-holder {
         display: flex;

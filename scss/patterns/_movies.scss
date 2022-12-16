@@ -1,16 +1,18 @@
 .movie-details {
-  display: flex;
   .sticky {
     position: sticky;
     top: 5rem;
   }
-  .col- {
-    &left {
-      flex: 1;
-    }
-    &right {
-      flex: 2;
-      padding: 0 1.5rem;
+  @media only screen and (min-width: 45em) {
+    display: flex;
+    .col- {
+      &left {
+        flex: 1;
+      }
+      &right {
+        flex: 2;
+        padding: 0 1.5rem;
+      }
     }
   }
 
@@ -44,12 +46,16 @@
     }
 
     &.credit-company {
-      --cols: 3;
+      --cols: 1;
       display: grid;
       gap: 0.5rem 0.5rem;
       grid-template-columns: repeat(var(--cols), 1fr);
       padding-top: 1.5rem;
       padding-bottom: 0.5rem;
+
+      @media only screen and (min-width: 45em) {
+        --cols: 3;
+      }
 
       li {
         display: flex;

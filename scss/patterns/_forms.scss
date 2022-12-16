@@ -163,7 +163,11 @@ input[type="checkbox"]:checked {
 }
 .radio__switch {
   clear: both;
-  display: flex;
+  display: grid;
+
+  @media screen and (min-width: 45em) {
+    display: flex;
+  }
 }
 
 .radio__switch_item {
