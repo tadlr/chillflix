@@ -88,7 +88,7 @@ const moviesAPI = {
       .map((obj, index) => {
         const movieID = obj.id;
         let moviePoster = moviesAPI.getImage(obj.poster_path, "poster", "og");
-        if (!moviePoster) moviePoster = "../images/poster.svg";
+        if (!moviePoster) moviePoster = "./images/poster.svg";
 
         const releaseDate = obj.first_air_date ?? obj.release_date;
         const date = new Date(releaseDate).toLocaleDateString();
@@ -113,7 +113,7 @@ const moviesAPI = {
             "backdrop",
             "lg"
           );
-          if (!movieBanner) movieBanner = "../images/banner.svg";
+          if (!movieBanner) movieBanner = "./images/banner.svg";
           let genres = obj.genres
             .map((gen) => {
               return `<li class="list-group-item">${gen.name}</li>`;
@@ -182,7 +182,7 @@ const moviesAPI = {
           cards.classList.add("container");
 
           return `
-          <a class="card" href="/credits/#/${kind}/${movieID}"
+          <a class="card" href="./credits.html#/${kind}/${movieID}"
             aria-label="${movieTitle}">
             <img src="${moviePoster}" class="card-img-top" alt="${kind} poster of: ${movieTitle}">
             <div class="card__content">
@@ -195,7 +195,7 @@ const moviesAPI = {
           const shortTxT = obj.overview.substring(0, 70) + "...";
           return `
           
-          <a class="card" href="/credits/#/${kind}/${movieID}"
+          <a class="card" href="./credits.html#/${kind}/${movieID}"
             aria-label="${movieTitle}">
             <img src="${moviePoster}" class="card-img-top" alt="${kind} poster of: ${movieTitle}">
             <div class="card__content">
@@ -342,7 +342,7 @@ const moviesAPI = {
               "profile",
               "lg"
             );
-            if (!picture) picture = "../images/profile.svg";
+            if (!picture) picture = "./images/profile.svg";
             return `
             <div class="card">
               <img src="${picture}" class="card-img-top" alt="${people.name} portrait">

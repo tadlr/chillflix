@@ -58,7 +58,7 @@ const pageManager = {
     const url = `${type}${page}${query}${pagination}`;
 
     if (location) {
-      window.location = `${location}${base}${type}${page}${query}${pagination}`;
+      window.location = `.${location}${base}${type}${page}${query}${pagination}`;
     } else {
       window.location.hash = `${type}${page}${query}${pagination}`;
     }
@@ -68,7 +68,7 @@ const pageManager = {
   },
   fetchPage: (page) => {
     const pageName = `${page}.html`;
-    const path = "../sections/";
+    const path = "./sections/";
 
     fetch(`${path}${pageName}`)
       .then((response) => {
