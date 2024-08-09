@@ -4,7 +4,7 @@ import { pageManager } from "./pageManager.js";
 
 const moviesAPI = {
   baseURL: "https://api.themoviedb.org",
-  api_key: "c835c80ce6c6afeca4aad5839c1db9d3",
+  api_key: "a5c0425da8c06915aa387eb97d2239c2",
   movieSearchURL: null,
   tvSearchURL: null,
   movieCreditsURL: null,
